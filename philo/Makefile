@@ -6,7 +6,7 @@
 #    By: shunwata <shunwata@student.42tokyo.jp>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/09/07 22:30:16 by shunwata          #+#    #+#              #
-#    Updated: 2025/09/07 22:47:59 by shunwata         ###   ########.fr        #
+#    Updated: 2025/09/07 22:49:21 by shunwata         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,8 +14,8 @@ NAME = philo
 CC = cc
 CFLAGS = -Wall -Wextra -Werror -I $(INC_DIR)
 
-SRC_DIR = philo/srcs
-INC_DIR = philo/includes
+SRC_DIR = srcs
+INC_DIR = includes
 
 SRC = $(addprefix $(SRC_DIR)/, test.c)
 OBJ = $(SRC:.c=.o)
