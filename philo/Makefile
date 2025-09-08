@@ -6,7 +6,7 @@
 #    By: shunwata <shunwata@student.42tokyo.jp>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/09/07 22:30:16 by shunwata          #+#    #+#              #
-#    Updated: 2025/09/08 18:40:58 by shunwata         ###   ########.fr        #
+#    Updated: 2025/09/08 18:52:22 by shunwata         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ CFLAGS = -I $(INC_DIR)
 SRC_DIR = srcs
 INC_DIR = includes
 
-SRC = $(addprefix $(SRC_DIR)/, initialize.c main.c routine.c utils.c test.c)
+SRC = $(addprefix $(SRC_DIR)/, initialize.c main.c routine.c utils.c)
 OBJ = $(SRC:.c=.o)
 
 all: $(NAME)
