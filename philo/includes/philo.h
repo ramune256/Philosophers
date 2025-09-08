@@ -6,7 +6,7 @@
 /*   By: shunwata <shunwata@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/07 22:32:36 by shunwata          #+#    #+#             */
-/*   Updated: 2025/09/08 18:48:53 by shunwata         ###   ########.fr       */
+/*   Updated: 2025/09/08 18:50:41 by shunwata         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ typedef struct s_table
 // utils.c
 long long	get_time(void);
 int			ft_atoi(const char *str);
+int			init_table(t_table *table, char **argv);
 void 		*philo_routine(void *arg);
 
 #endif
