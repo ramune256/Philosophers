@@ -6,7 +6,7 @@
 /*   By: shunwata <shunwata@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/07 22:32:36 by shunwata          #+#    #+#             */
-/*   Updated: 2025/09/08 18:36:59 by shunwata         ###   ########.fr       */
+/*   Updated: 2025/09/08 18:48:53 by shunwata         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ typedef struct s_philo
 	int				eat_count;
 	long long		last_meal_time;
 	pthread_t		thread;
-	t_table			*table;
+	struct s_table	*table;
 }	t_philo;
 
 // プログラム全体の状態とルールを管理する構造体
