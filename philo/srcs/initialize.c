@@ -13,10 +13,11 @@
 #include "philo.h"
 
 // プログラム全体(table)を初期化
-int init_table(t_table *table, char **argv)
+int	init_table(t_table *table, char **argv)
 {
 	int	i;
 
+	memset(table, 0, sizeof(table));
 	table->num_philos = ft_atoi(argv[1]);
 	table->time_to_die = ft_atoi(argv[2]);
 	table->time_to_eat = ft_atoi(argv[3]);
@@ -24,24 +25,18 @@ int init_table(t_table *table, char **argv)
 	if (argv[5])
 		table->num_meals_required = ft_atoi(argv[5]);
 	else
-		table->num_meals_required = -1; // -1は食事回数制限なしを示す
-	table->simulation_should_end = 0;
-
-	// Mutexの初期化
+		table->num_meals_required = -1;
+	table->simulation_should_end = false;
 	table->forks = malloc(sizeof(pthread_mutex_t) * table->num_philos);
-	if (!table->forks)
-		return (1);
+	table->philos = malloc(sizeof(t_philo) * (table->num_philos));
+	if (!table->forks || !table->philos)
+		(free(table->forks), free(table->philos));
 	i = 0;
 	while (i < (table->num_philos))
-		pthread_mutex_init(&table->forks[i++], NULL);
+		(pthread_mutex_init(&table->forks[i], NULL), i++);
 	pthread_mutex_init(&table->write_lock, NULL);
 	pthread_mutex_init(&table->meal_lock, NULL);
 	pthread_mutex_init(&table->death_lock, NULL);
-
-	// 哲学者たちの初期化
-	table->philos = malloc(sizeof(t_philo) * (table->num_philos));
-	if (!table->philos)
-		return (1); //table->forksもフリーすべき mutexも？
 	i = 0;
 	while (i < table->num_philos)
 	{

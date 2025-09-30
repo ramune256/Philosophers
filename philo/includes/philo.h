@@ -18,6 +18,8 @@
 # include <stdlib.h>
 # include <sys/time.h>
 # include <unistd.h>
+# include <stdbool.h>
+# include <string.h>
 
 // 哲学者の状態を管理する構造体
 typedef struct s_philo
@@ -38,7 +40,7 @@ typedef struct s_table
 	long long		time_to_sleep;
 	int				num_meals_required; // オプション引数
 	long long		start_time;
-	int				simulation_should_end;
+	bool			simulation_should_end;
 	t_philo			*philos;
 	pthread_mutex_t	*forks;
 	pthread_mutex_t	write_lock; // printfを保護するMutex
@@ -51,7 +53,11 @@ typedef struct s_table
 // utils.c
 long long	get_time(void);
 int			ft_atoi(const char *str);
+void		precise_sleep(long long target_time);
+void		cleanup(t_table *table);
+void		print_status(t_philo *philo, char *status);
 int			init_table(t_table *table, char **argv);
 void 		*philo_routine(void *arg);
+bool		simulation_finished(t_table *table);
 
 #endif

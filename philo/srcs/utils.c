@@ -21,6 +21,42 @@ long long	get_time(void)
 	return ((tv.tv_sec * 1000) + (tv.tv_usec / 1000));
 }
 
+void precise_sleep(long long target_time)
+{
+	long long start;
+
+	start = get_time();
+	while ((get_time() - start) < target_time)
+	{
+		usleep(500); // 短いスリープを繰り返す
+	}
+}
+
+void cleanup(t_table *table)
+{
+    for (int i = 0; i < table->num_philos; i++)
+        pthread_mutex_destroy(&table->forks[i]);
+    pthread_mutex_destroy(&table->write_lock);
+    pthread_mutex_destroy(&table->meal_lock);
+    pthread_mutex_destroy(&table->death_lock);
+    free(table->forks);
+    free(table->philos);
+}
+
+void print_status(t_philo *philo, char *status)
+{
+    long long current_time;
+
+    pthread_mutex_lock(&philo->table->write_lock);
+    // 誰かが死んでいたら、もう何も表示しない
+    if (!simulation_finished(philo->table))
+    {
+        current_time = get_time() - philo->table->start_time;
+        printf("%lld %d %s\n", current_time, philo->id, status);
+    }
+    pthread_mutex_unlock(&philo->table->write_lock);
+}
+
 int	ft_atoi(const char *str)
 {
 	int		sign;
