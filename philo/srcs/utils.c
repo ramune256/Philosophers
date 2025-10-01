@@ -6,7 +6,7 @@
 /*   By: shunwata <shunwata@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/08 17:53:38 by shunwata          #+#    #+#             */
-/*   Updated: 2025/10/01 21:31:11 by shunwata         ###   ########.fr       */
+/*   Updated: 2025/10/01 21:45:53 by shunwata         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,15 +36,15 @@ void cleanup(t_table *table)
 	i = 0;
 	while (i < table->num_philos)
 	{
-		if (&table->forks[i].is_initialized)
-    		pthread_mutex_destroy(&table->forks[i].mutex);
+        if (table->forks && table->forks[i].is_initialized)
+            pthread_mutex_destroy(&table->forks[i].mutex);
 		i++;
 	}
-	if (table->write_lock.is_initialized)
+    if (table->write_lock.is_initialized)
 		pthread_mutex_destroy(&table->write_lock.mutex);
-	if (table->meal_lock.is_initialized)
-    	pthread_mutex_destroy(&table->meal_lock.mutex);
-	if (table->death_lock.is_initialized)
+    if (table->meal_lock.is_initialized)
+        pthread_mutex_destroy(&table->meal_lock.mutex);
+    if (table->death_lock.is_initialized)
 		pthread_mutex_destroy(&table->death_lock.mutex);
     free(table->forks);
     free(table->philos);

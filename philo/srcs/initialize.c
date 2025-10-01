@@ -6,7 +6,7 @@
 /*   By: shunwata <shunwata@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/08 18:00:34 by shunwata          #+#    #+#             */
-/*   Updated: 2025/10/01 20:19:30 by shunwata         ###   ########.fr       */
+/*   Updated: 2025/10/01 21:50:30 by shunwata         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,9 @@ int	mutex_init_manage(t_mutex_combo *mutex_combo, t_table *table)
 
 int	init_table(t_table *table, char **argv)
 {
-	int	i;
+    int	i;
 
-	memset(table, 0, sizeof(table));
+    memset(table, 0, sizeof(t_table));
 	table->num_philos = ft_atoi(argv[1]);
 	table->time_to_die = ft_atoi(argv[2]);
 	table->time_to_eat = ft_atoi(argv[3]);

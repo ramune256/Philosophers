@@ -6,11 +6,20 @@
 /*   By: shunwata <shunwata@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/08 18:09:14 by shunwata          #+#    #+#             */
-/*   Updated: 2025/10/01 21:28:09 by shunwata         ###   ########.fr       */
+/*   Updated: 2025/10/01 22:03:21 by shunwata         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
+void	*lonely_philo(t_table *table, t_philo *philo, int left_fork)
+{
+	pthread_mutex_lock(&table->forks[left_fork].mutex);
+	print_status(philo, "has taken a fork");
+	precise_sleep(table->time_to_die + 1);
+	pthread_mutex_unlock(&table->forks[left_fork].mutex);
+	return (NULL);
+}
 
 void	get_forks(t_table *table, t_philo *philo, int fork1, int fork2)
 {
@@ -43,12 +52,14 @@ void *philo_routine(void *arg)
 	right_fork = philo->id % table->num_philos;
 	// if (philo->id % 2 != 0) // (任意) スタートタイミングをずらす
 	// 	usleep(100);
-	while (!simulation_finished(table))
+    while (!simulation_finished(table))
 	{
-		if (philo->id % 2 == 0)
-			get_forks(table, philo, left_fork, right_fork);
-		else
-			get_forks(table, philo, right_fork, left_fork);
+        if (table->num_philos == 1)
+            return (lonely_philo(table, philo, left_fork));
+        if (philo->id % 2 == 0)
+            get_forks(table, philo, left_fork, right_fork);
+        else
+            get_forks(table, philo, right_fork, left_fork);
 		philo_eats(table, philo);
 		pthread_mutex_unlock(&table->forks[left_fork].mutex);
 		pthread_mutex_unlock(&table->forks[right_fork].mutex);
