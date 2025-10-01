@@ -6,7 +6,7 @@
 /*   By: shunwata <shunwata@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/08 17:55:08 by shunwata          #+#    #+#             */
-/*   Updated: 2025/09/08 18:13:07 by shunwata         ###   ########.fr       */
+/*   Updated: 2025/10/01 21:08:54 by shunwata         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,59 +25,54 @@ static int	is_valid_args(int argc, char **argv)
 
 void monitor_philos(t_table *table)
 {
+	int	i;
+
 	while (1)
 	{
-		pthread_mutex_lock(&table->death_lock);
+		pthread_mutex_lock(&table->death_lock.mutex);
 		if (table->simulation_should_end)
 		{
-			pthread_mutex_unlock(&table->death_lock);
+			pthread_mutex_unlock(&table->death_lock.mutex);
 			break;
 		}
-		pthread_mutex_unlock(&table->death_lock);
-
-		for (int i = 0; i < table->num_philos; i++)
+		pthread_mutex_unlock(&table->death_lock.mutex);
+		i = 0;
+		while (i < table->num_philos)
 		{
-			pthread_mutex_lock(&table->meal_lock);
-			// 最後の食事からtime_to_die以上経過していたら死亡
+			pthread_mutex_lock(&table->meal_lock.mutex);
 			if ((get_time() - table->philos[i].last_meal_time) > (table->time_to_die))
 			{
-				// printf("%lld %d died\n", get_time() - table->start_time, table->philos[i].id);
 				print_status(&table->philos[i], "died");
-				pthread_mutex_lock(&table->death_lock);
+				pthread_mutex_lock(&table->death_lock.mutex);
 				table->simulation_should_end = 1;
-				pthread_mutex_unlock(&table->death_lock);
-				pthread_mutex_unlock(&table->meal_lock);
-				return;
+				pthread_mutex_unlock(&table->death_lock.mutex);
+				pthread_mutex_unlock(&table->meal_lock.mutex);
+				return ;
 			}
-			pthread_mutex_unlock(&table->meal_lock);
+			pthread_mutex_unlock(&table->meal_lock.mutex);
+			i++;
 		}
 		usleep(100); // CPUを使いすぎないように少し待つ
 	}
 }
 
-
 int main(int argc, char **argv)
 {
 	t_table	table;
+	int		i;
 
 	if (!is_valid_args(argc, argv))
 		return (1);
 	if (init_table(&table, argv) != 0)
-		return (1);
-
+		return (cleanup(&table), 1);
 	table.start_time = get_time();
-	for (int i = 0; i < table.num_philos; i++)
-	{
-		// 各哲学者のスレッドを作成
-		pthread_create(&table.philos[i].thread, NULL, &philo_routine, &table.philos[i]);
-	}
+	i = 0;
+	while (i < table.num_philos)
+		pthread_create(&table.philos[i].thread, NULL, &philo_routine, &table.philos[i++]);
 	monitor_philos(&table);
-	for (int i = 0; i < table.num_philos; i++)
-	{
-		// 各哲学者のスレッドが終了するのを待つ
-		pthread_join(table.philos[i].thread, NULL);
-	}
-
+	i = 0;
+	while (i < table.num_philos)
+		pthread_join(table.philos[i++].thread, NULL);
 	cleanup(&table);
 	return (0);
 }

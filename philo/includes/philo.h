@@ -6,7 +6,7 @@
 /*   By: shunwata <shunwata@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/07 22:32:36 by shunwata          #+#    #+#             */
-/*   Updated: 2025/09/08 18:50:41 by shunwata         ###   ########.fr       */
+/*   Updated: 2025/10/01 20:05:55 by shunwata         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@
 # include <stdbool.h>
 # include <string.h>
 
-// 哲学者の状態を管理する構造体
 typedef struct s_philo
 {
 	int				id;
@@ -31,26 +30,29 @@ typedef struct s_philo
 	struct s_table	*table;
 }	t_philo;
 
-// プログラム全体の状態とルールを管理する構造体
+typedef struct s_mutex_combo
+{
+	pthread_mutex_t	mutex;
+	bool			is_initialized;
+}	t_mutex_combo;
+
 typedef struct s_table
 {
 	int				num_philos;
 	long long		time_to_die;
 	long long		time_to_eat;
 	long long		time_to_sleep;
-	int				num_meals_required; // オプション引数
+	int				num_meals_required;
 	long long		start_time;
 	bool			simulation_should_end;
 	t_philo			*philos;
-	pthread_mutex_t	*forks;
-	pthread_mutex_t	write_lock; // printfを保護するMutex
-	pthread_mutex_t	meal_lock; // last_meal_timeやeat_countを保護するMutex
-	pthread_mutex_t	death_lock; // 死亡フラグを保護するMutex
+	t_mutex_combo	*forks;
+	t_mutex_combo	write_lock;
+	t_mutex_combo	meal_lock;
+	t_mutex_combo	death_lock;
+	bool			alloc_failed;
 }	t_table;
 
-/* --- 関数プロトタイプ --- */
-
-// utils.c
 long long	get_time(void);
 int			ft_atoi(const char *str);
 void		precise_sleep(long long target_time);
