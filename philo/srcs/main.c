@@ -15,6 +15,7 @@
 static int	is_valid_args(int argc, char **argv)
 {
 	// ここに引数の数や内容（数字か、正の数か）をチェックする処理を追加
+	(void)argv;
 	if (argc < 5 || argc > 6)
 	{
 		printf("Error: Invalid number of arguments\n");
@@ -68,7 +69,10 @@ int main(int argc, char **argv)
 	table.start_time = get_time();
 	i = 0;
 	while (i < table.num_philos)
-		pthread_create(&table.philos[i].thread, NULL, &philo_routine, &table.philos[i++]);
+	{
+		pthread_create(&table.philos[i].thread, NULL, &philo_routine, &table.philos[i]);
+		i++;
+	}
 	monitor_philos(&table);
 	i = 0;
 	while (i < table.num_philos)
