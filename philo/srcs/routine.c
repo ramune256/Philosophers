@@ -6,7 +6,7 @@
 /*   By: shunwata <shunwata@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/08 18:09:14 by shunwata          #+#    #+#             */
-/*   Updated: 2025/10/01 22:03:21 by shunwata         ###   ########.fr       */
+/*   Updated: 2025/10/14 14:49:03 by shunwata         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,17 @@ void *philo_routine(void *arg)
 	// 	usleep(100);
     while (!simulation_finished(table))
 	{
+		// 必要回数に達している場合は終了（フォーク取得前にチェック）
+		if (table->num_meals > 0)
+		{
+			pthread_mutex_lock(&table->meal_lock.mutex);
+			if (philo->eat_count >= table->num_meals)
+			{
+				pthread_mutex_unlock(&table->meal_lock.mutex);
+				return (NULL);
+			}
+			pthread_mutex_unlock(&table->meal_lock.mutex);
+		}
         if (table->num_philos == 1)
             return (lonely_philo(table, philo, left_fork));
         if (philo->id % 2 == 0)

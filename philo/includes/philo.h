@@ -6,7 +6,7 @@
 /*   By: shunwata <shunwata@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/07 22:32:36 by shunwata          #+#    #+#             */
-/*   Updated: 2025/10/01 20:05:55 by shunwata         ###   ########.fr       */
+/*   Updated: 2025/10/14 14:59:49 by shunwata         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ typedef struct s_table
 	long long		time_to_die;
 	long long		time_to_eat;
 	long long		time_to_sleep;
-	int				num_meals_required;
+	int				num_meals;
 	long long		start_time;
 	bool			simulation_should_end;
 	t_philo			*philos;
@@ -58,7 +58,7 @@ int			ft_atoi(const char *str);
 void		precise_sleep(long long target_time);
 void		cleanup(t_table *table);
 void		print_status(t_philo *philo, char *status);
-int			init_table(t_table *table, char **argv);
+bool		init_table(t_table *table, char **argv);
 void 		*philo_routine(void *arg);
 bool		simulation_finished(t_table *table);
 
