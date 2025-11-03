@@ -6,7 +6,7 @@
 /*   By: shunwata <shunwata@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/07 22:32:36 by shunwata          #+#    #+#             */
-/*   Updated: 2025/10/14 14:59:49 by shunwata         ###   ########.fr       */
+/*   Updated: 2025/10/20 14:42:11 by shunwata         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,8 @@ void		cleanup(t_table *table);
 void		print_status(t_philo *philo, char *status);
 bool		init_table(t_table *table, char **argv);
 void 		*philo_routine(void *arg);
+bool		is_valid_args(int argc, char **argv);
+void		monitor_philos(t_table *table);
 bool		simulation_finished(t_table *table);
 
 #endif

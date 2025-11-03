@@ -6,13 +6,13 @@
 /*   By: shunwata <shunwata@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/08 18:09:14 by shunwata          #+#    #+#             */
-/*   Updated: 2025/10/14 14:49:03 by shunwata         ###   ########.fr       */
+/*   Updated: 2025/11/03 22:38:51 by shunwata         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void	*lonely_philo(t_table *table, t_philo *philo, int left_fork)
+static void	*lonely_philo(t_table *table, t_philo *philo, int left_fork)
 {
 	pthread_mutex_lock(&table->forks[left_fork].mutex);
 	print_status(philo, "has taken a fork");
@@ -21,15 +21,22 @@ void	*lonely_philo(t_table *table, t_philo *philo, int left_fork)
 	return (NULL);
 }
 
-void	get_forks(t_table *table, t_philo *philo, int fork1, int fork2)
+static bool	get_forks(t_table *table, t_philo *philo, int fork1, int fork2)
 {
 	pthread_mutex_lock(&table->forks[fork1].mutex);
 	print_status(philo, "has taken a fork");
 	pthread_mutex_lock(&table->forks[fork2].mutex);
 	print_status(philo, "has taken a fork");
+	return (true);
 }
 
-void	philo_eats(t_table *table, t_philo *philo)
+static void	return_forks(t_table *table, int fork1, int fork2)
+{
+	pthread_mutex_unlock(&table->forks[fork1].mutex);
+	pthread_mutex_unlock(&table->forks[fork2].mutex);
+}
+
+static void	philo_eats(t_table *table, t_philo *philo)
 {
 	print_status(philo, "is eating");
 	pthread_mutex_lock(&table->meal_lock.mutex);
@@ -37,6 +44,27 @@ void	philo_eats(t_table *table, t_philo *philo)
 	philo->eat_count++;
 	pthread_mutex_unlock(&table->meal_lock.mutex);
 	precise_sleep(table->time_to_eat);
+}
+
+static void	check_eat_count(t_table *table, t_philo *philo)
+{
+	if (table->num_meals > 0) // 必要回数に達している場合は終了（フォーク取得前にチェック）
+	{
+		pthread_mutex_lock(&table->meal_lock.mutex);
+		if (philo->eat_count >= table->num_meals)
+			return (pthread_mutex_unlock(&table->meal_lock.mutex), NULL);
+		pthread_mutex_unlock(&table->meal_lock.mutex);
+	}
+}
+
+bool simulation_finished(t_table *table)
+{
+	bool	is_finished;
+
+	pthread_mutex_lock(&table->death_lock.mutex);
+	is_finished = table->simulation_should_end;
+	pthread_mutex_unlock(&table->death_lock.mutex);
+	return (is_finished);
 }
 
 void *philo_routine(void *arg)
@@ -50,43 +78,20 @@ void *philo_routine(void *arg)
 	table = philo->table;
 	left_fork = philo->id - 1;
 	right_fork = philo->id % table->num_philos;
-	// if (philo->id % 2 != 0) // (任意) スタートタイミングをずらす
-	// 	usleep(100);
+	if (table->num_philos == 1)
+		return (lonely_philo(table, philo, left_fork));
     while (!simulation_finished(table))
 	{
-		// 必要回数に達している場合は終了（フォーク取得前にチェック）
-		if (table->num_meals > 0)
-		{
-			pthread_mutex_lock(&table->meal_lock.mutex);
-			if (philo->eat_count >= table->num_meals)
-			{
-				pthread_mutex_unlock(&table->meal_lock.mutex);
-				return (NULL);
-			}
-			pthread_mutex_unlock(&table->meal_lock.mutex);
-		}
-        if (table->num_philos == 1)
-            return (lonely_philo(table, philo, left_fork));
-        if (philo->id % 2 == 0)
-            get_forks(table, philo, left_fork, right_fork);
-        else
-            get_forks(table, philo, right_fork, left_fork);
+		check_eat_count(table, philo);
+		((philo->id % 2 == 0 && get_forks(table, philo, left_fork, right_fork))
+			|| get_forks(table, philo, right_fork, left_fork));
+		if (simulation_finished(table))
+			return (return_forks(table, left_fork, right_fork), NULL);
 		philo_eats(table, philo);
-		pthread_mutex_unlock(&table->forks[left_fork].mutex);
-		pthread_mutex_unlock(&table->forks[right_fork].mutex);
+		return_forks(table, left_fork, right_fork);
 		print_status(philo, "is sleeping");
 		precise_sleep(table->time_to_sleep);
 		print_status(philo, "is thinking");
 	}
 	return (NULL);
-}
-
-bool simulation_finished(t_table *table)
-{
-	bool	is_finished;
-
-	pthread_mutex_lock(&table->death_lock.mutex);
-	is_finished = table->simulation_should_end;
-	pthread_mutex_unlock(&table->death_lock.mutex);
-	return (is_finished);
 }

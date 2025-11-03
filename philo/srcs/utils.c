@@ -6,7 +6,7 @@
 /*   By: shunwata <shunwata@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/08 17:53:38 by shunwata          #+#    #+#             */
-/*   Updated: 2025/10/01 21:45:53 by shunwata         ###   ########.fr       */
+/*   Updated: 2025/10/20 14:29:02 by shunwata         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void cleanup(t_table *table)
 	i = 0;
 	while (i < table->num_philos)
 	{
-        if (table->forks && table->forks[i].is_initialized)
+        if ((table->forks) && (table->forks[i].is_initialized))
             pthread_mutex_destroy(&table->forks[i].mutex);
 		i++;
 	}
