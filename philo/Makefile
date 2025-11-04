@@ -6,19 +6,18 @@
 #    By: shunwata <shunwata@student.42tokyo.jp>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/09/07 22:30:16 by shunwata          #+#    #+#              #
-#    Updated: 2025/10/01 21:32:08 by shunwata         ###   ########.fr        #
+#    Updated: 2025/11/04 15:58:43 by shunwata         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = philo
 CC = cc
 CFLAGS = -Wall -Wextra -Werror -I $(INC_DIR)
-# CFLAGS = -I $(INC_DIR)
 
 SRC_DIR = srcs
 INC_DIR = includes
 
-SRC = $(addprefix $(SRC_DIR)/, initialize.c main.c routine.c utils.c)
+SRC = $(addprefix $(SRC_DIR)/, common_utils.c initialize.c main.c monitor.c philos_routine_utils.c philos_routine.c)
 OBJ = $(SRC:.c=.o)
 
 all: $(NAME)

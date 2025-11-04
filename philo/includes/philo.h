@@ -6,7 +6,7 @@
 /*   By: shunwata <shunwata@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/07 22:32:36 by shunwata          #+#    #+#             */
-/*   Updated: 2025/10/20 14:42:11 by shunwata         ###   ########.fr       */
+/*   Updated: 2025/11/04 15:56:36 by shunwata         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,14 +54,21 @@ typedef struct s_table
 }	t_table;
 
 long long	get_time(void);
-int			ft_atoi(const char *str);
 void		precise_sleep(long long target_time);
-void		cleanup(t_table *table);
 void		print_status(t_philo *philo, char *status);
+void		cleanup(t_table *table);
+int			ft_atoi(const char *str);
+
 bool		init_table(t_table *table, char **argv);
-void 		*philo_routine(void *arg);
+
 bool		is_valid_args(int argc, char **argv);
-void		monitor_philos(t_table *table);
-bool		simulation_finished(t_table *table);
+
+void		*monitor_philos(t_table *table);
+
+void		set_forks(t_table *table, t_philo *philo, int *left_fork, int *right_fork);
+bool		get_forks(t_table *table, t_philo *philo, int fork1, int fork2);
+void		return_forks(t_table *table, int fork1, int fork2);
+
+void 		*philo_routine(void *arg);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: shunwata <shunwata@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/08 17:53:38 by shunwata          #+#    #+#             */
-/*   Updated: 2025/10/20 14:29:02 by shunwata         ###   ########.fr       */
+/*   Updated: 2025/11/04 15:50:33 by shunwata         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,34 @@ void precise_sleep(long long target_time)
 		usleep(500);
 }
 
+// void print_status(t_philo *philo, char *status)
+// {
+//     long long current_time;
+
+//     pthread_mutex_lock(&philo->table->write_lock.mutex);
+//     if (!simulation_finished(philo->table))
+//     {
+//         current_time = get_time() - philo->table->start_time;
+//         printf("%lld %d %s\n", current_time, philo->id, status);
+//     }
+//     pthread_mutex_unlock(&philo->table->write_lock.mutex);
+// }
+
+void print_status(t_philo *philo, char *status)
+{
+	long long	current_time;
+
+	pthread_mutex_lock(&philo->table->death_lock.mutex);// ★ 1. 常に death_lock を先にロックする
+	if (!philo->table->simulation_should_end) // ★ 2. シミュレーションが終了していないかチェック
+	{
+		pthread_mutex_lock(&philo->table->write_lock.mutex); // ★ 3. 終了していない場合のみ、write_lock をロックする
+		current_time = get_time() - philo->table->start_time;
+		printf("%lld %d %s\n", current_time, philo->id, status);
+		pthread_mutex_unlock(&philo->table->write_lock.mutex);
+	}
+	pthread_mutex_unlock(&philo->table->death_lock.mutex);
+}
+
 void cleanup(t_table *table)
 {
 	int	i;
@@ -48,19 +76,6 @@ void cleanup(t_table *table)
 		pthread_mutex_destroy(&table->death_lock.mutex);
     free(table->forks);
     free(table->philos);
-}
-
-void print_status(t_philo *philo, char *status)
-{
-    long long current_time;
-
-    pthread_mutex_lock(&philo->table->write_lock.mutex);
-    if (!simulation_finished(philo->table))
-    {
-        current_time = get_time() - philo->table->start_time;
-        printf("%lld %d %s\n", current_time, philo->id, status);
-    }
-    pthread_mutex_unlock(&philo->table->write_lock.mutex);
 }
 
 int	ft_atoi(const char *str)
