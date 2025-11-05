@@ -6,7 +6,7 @@
 /*   By: shunwata <shunwata@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/08 18:09:14 by shunwata          #+#    #+#             */
-/*   Updated: 2025/11/04 15:53:28 by shunwata         ###   ########.fr       */
+/*   Updated: 2025/11/04 16:11:58 by shunwata         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,10 +35,8 @@ static bool	no_need_to_eat(t_table *table, t_philo *philo)
 {
 	if (table->num_meals > 0)
 	{
-		pthread_mutex_lock(&table->meal_lock.mutex);
 		if ((philo->eat_count) >= (table->num_meals))
-			return (pthread_mutex_unlock(&table->meal_lock.mutex), true);
-		pthread_mutex_unlock(&table->meal_lock.mutex);
+			return (true);
 	}
 	return (false);
 }

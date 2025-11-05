@@ -6,7 +6,7 @@
 /*   By: shunwata <shunwata@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/07 22:32:36 by shunwata          #+#    #+#             */
-/*   Updated: 2025/11/04 15:56:36 by shunwata         ###   ########.fr       */
+/*   Updated: 2025/11/05 22:25:48 by shunwata         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include <unistd.h>
 # include <stdbool.h>
 # include <string.h>
+# include <limits.h>
 
 typedef struct s_philo
 {
