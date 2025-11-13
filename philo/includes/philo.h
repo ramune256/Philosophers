@@ -6,7 +6,7 @@
 /*   By: shunwata <shunwata@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/07 22:32:36 by shunwata          #+#    #+#             */
-/*   Updated: 2025/11/05 22:25:48 by shunwata         ###   ########.fr       */
+/*   Updated: 2025/11/13 18:05:50 by shunwata         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,10 @@ long long	get_time(void);
 void		precise_sleep(long long target_time);
 void		print_status(t_philo *philo, char *status);
 void		cleanup(t_table *table);
+
+int			ft_isdigit(int c);
+size_t		ft_strlen(const char *s);
+int			ft_strncmp(const char *s1, const char *s2, size_t n);
 int			ft_atoi(const char *str);
 
 bool		init_table(t_table *table, char **argv);

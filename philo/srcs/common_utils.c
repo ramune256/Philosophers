@@ -6,7 +6,7 @@
 /*   By: shunwata <shunwata@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/08 17:53:38 by shunwata          #+#    #+#             */
-/*   Updated: 2025/11/05 22:34:30 by shunwata         ###   ########.fr       */
+/*   Updated: 2025/11/13 18:04:56 by shunwata         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,16 +64,3 @@ void cleanup(t_table *table)
     free(table->forks);
     free(table->philos);
 }
-
-// void print_status(t_philo *philo, char *status)
-// {
-//     long long current_time;
-
-//     pthread_mutex_lock(&philo->table->write_lock.mutex);
-//     if (!simulation_finished(philo->table))
-//     {
-//         current_time = get_time() - philo->table->start_time;
-//         printf("%lld %d %s\n", current_time, philo->id, status);
-//     }
-//     pthread_mutex_unlock(&philo->table->write_lock.mutex);
-// }
