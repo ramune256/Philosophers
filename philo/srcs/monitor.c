@@ -6,7 +6,7 @@
 /*   By: shunwata <shunwata@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/20 14:19:56 by shunwata          #+#    #+#             */
-/*   Updated: 2025/11/13 18:25:39 by shunwata         ###   ########.fr       */
+/*   Updated: 2025/11/13 18:34:07 by shunwata         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,9 +43,11 @@ void	*monitor_philos(t_table *table)
 		while (i < (table->num_philos))
 		{
 			pthread_mutex_lock(&table->meal_lock.mutex);
-			if ((get_time() - table->philos[i].last_meal_time) > (table->time_to_die))
-				return(someone_died(table, i), NULL);
-			if (table->num_meals > 0 && (table->philos[i].eat_count) < (table->num_meals))
+			if ((get_time() - table->philos[i].last_meal_time)
+				> (table->time_to_die))
+				return (someone_died(table, i), NULL);
+			if (table->num_meals > 0 && (table->philos[i].eat_count)
+				< (table->num_meals))
 				all_philos_have_eaten = false;
 			pthread_mutex_unlock(&table->meal_lock.mutex);
 			i++;

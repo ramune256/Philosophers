@@ -6,7 +6,7 @@
 /*   By: shunwata <shunwata@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/20 14:21:09 by shunwata          #+#    #+#             */
-/*   Updated: 2025/11/13 18:30:20 by shunwata         ###   ########.fr       */
+/*   Updated: 2025/11/13 18:33:06 by shunwata         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,8 +75,8 @@ bool	is_valid_args(int argc, char **argv)
 	i = 1;
 	while (i < argc)
 	{
-		if (!is_numeric(argv[i]) || !is_valid_int(argv[i]) ||
-			!is_positive(argv[i]))
+		if (!is_numeric(argv[i]) || !is_valid_int(argv[i])
+		|| !is_positive(argv[i]))
 			return (false);
 		if (ft_atoi(argv[i]) == 0)
 			return (false);

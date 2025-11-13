@@ -6,7 +6,7 @@
 /*   By: shunwata <shunwata@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/08 17:53:38 by shunwata          #+#    #+#             */
-/*   Updated: 2025/11/13 18:29:37 by shunwata         ###   ########.fr       */
+/*   Updated: 2025/11/13 18:32:34 by shunwata         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void	print_status(t_philo *philo, char *status)
 	pthread_mutex_unlock(&philo->table->death_lock.mutex);
 }
 
-void cleanup(t_table *table)
+void	cleanup(t_table *table)
 {
 	int	i;
 
