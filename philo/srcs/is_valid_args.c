@@ -6,7 +6,7 @@
 /*   By: shunwata <shunwata@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/20 14:21:09 by shunwata          #+#    #+#             */
-/*   Updated: 2025/11/05 22:50:49 by shunwata         ###   ########.fr       */
+/*   Updated: 2025/11/13 18:10:28 by shunwata         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,6 @@ static bool	is_positive(const char *str)
 bool	is_valid_args(int argc, char **argv)
 {
 	int	i;
-	int	philos_num;
 
 	if (argc < 5 || argc > 6)
 		return (false);
