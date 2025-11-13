@@ -6,13 +6,13 @@
 /*   By: shunwata <shunwata@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/08 17:55:08 by shunwata          #+#    #+#             */
-/*   Updated: 2025/11/03 21:30:46 by shunwata         ###   ########.fr       */
+/*   Updated: 2025/11/13 18:22:50 by shunwata         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int main(int argc, char **argv)
+int	main(int argc, char **argv)
 {
 	t_table	table;
 	int		i;

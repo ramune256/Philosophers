@@ -6,7 +6,7 @@
 /*   By: shunwata <shunwata@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/07 22:32:36 by shunwata          #+#    #+#             */
-/*   Updated: 2025/11/13 18:05:50 by shunwata         ###   ########.fr       */
+/*   Updated: 2025/11/13 18:21:21 by shunwata         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,10 +70,10 @@ bool		is_valid_args(int argc, char **argv);
 
 void		*monitor_philos(t_table *table);
 
-void		set_forks(t_table *table, t_philo *philo, int *left_fork, int *right_fork);
+void		set_forks(t_table *table, t_philo *philo, int *l_fork, int *r_fork);
 bool		get_forks(t_table *table, t_philo *philo, int fork1, int fork2);
 void		return_forks(t_table *table, int fork1, int fork2);
 
-void 		*philo_routine(void *arg);
+void		*philo_routine(void *arg);
 
 #endif

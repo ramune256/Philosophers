@@ -6,16 +6,16 @@
 /*   By: shunwata <shunwata@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/04 15:51:28 by shunwata          #+#    #+#             */
-/*   Updated: 2025/11/04 15:53:50 by shunwata         ###   ########.fr       */
+/*   Updated: 2025/11/13 18:20:47 by shunwata         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void	set_forks(t_table *table, t_philo *philo, int *left_fork, int *right_fork)
+void	set_forks(t_table *table, t_philo *philo, int *l_fork, int *r_fork)
 {
-	*left_fork = philo->id - 1;
-	*right_fork = philo->id % table->num_philos;
+	*l_fork = philo->id - 1;
+	*r_fork = philo->id % table->num_philos;
 }
 
 bool	get_forks(t_table *table, t_philo *philo, int fork1, int fork2)

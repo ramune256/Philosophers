@@ -6,7 +6,7 @@
 /*   By: shunwata <shunwata@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/08 18:09:14 by shunwata          #+#    #+#             */
-/*   Updated: 2025/11/13 18:02:28 by shunwata         ###   ########.fr       */
+/*   Updated: 2025/11/13 18:27:54 by shunwata         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ static bool	no_need_to_eat(t_table *table, t_philo *philo)
 	return (false);
 }
 
-static bool simulation_finished(t_table *table)
+static bool	simulation_finished(t_table *table)
 {
 	bool	is_finished;
 
@@ -51,24 +51,24 @@ static bool simulation_finished(t_table *table)
 	return (is_finished);
 }
 
-void *philo_routine(void *arg)
+void	*philo_routine(void *arg)
 {
-	t_philo *philo;
-	t_table *table;
-	int 	left_fork;
-	int 	right_fork;
+	t_philo	*philo;
+	t_table	*table;
+	int		left_fork;
+	int		right_fork;
 
 	philo = (t_philo *)arg;
 	table = philo->table;
 	set_forks(table, philo, &left_fork, &right_fork);
 	if (table->num_philos == 1)
 		return (lonely_philo(table, philo, left_fork));
-    while (!simulation_finished(table))
+	while (!simulation_finished(table))
 	{
 		if (no_need_to_eat(table, philo))
 			return (NULL);
-		(void)((philo->id % 2 == 0 && get_forks(table, philo, left_fork, right_fork))
-			|| get_forks(table, philo, right_fork, left_fork));
+		(void)((philo->id % 2 == 0 && get_forks(table, philo, left_fork,
+			right_fork)) || get_forks(table, philo, right_fork, left_fork));
 		if (simulation_finished(table))
 			return (return_forks(table, left_fork, right_fork), NULL);
 		philo_eats(table, philo);

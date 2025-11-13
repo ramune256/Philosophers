@@ -6,7 +6,7 @@
 /*   By: shunwata <shunwata@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/08 17:53:38 by shunwata          #+#    #+#             */
-/*   Updated: 2025/11/13 18:04:56 by shunwata         ###   ########.fr       */
+/*   Updated: 2025/11/13 18:29:37 by shunwata         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,23 +20,23 @@ long long	get_time(void)
 	return ((tv.tv_sec * 1000) + (tv.tv_usec / 1000));
 }
 
-void precise_sleep(long long target_time)
+void	precise_sleep(long long target_time)
 {
-	long long start;
+	long long	start;
 
 	start = get_time();
 	while ((get_time() - start) < target_time)
 		usleep(500);
 }
 
-void print_status(t_philo *philo, char *status)
+void	print_status(t_philo *philo, char *status)
 {
 	long long	current_time;
 
-	pthread_mutex_lock(&philo->table->death_lock.mutex);// ★ 1. 常に death_lock を先にロックする
-	if (!philo->table->simulation_should_end) // ★ 2. シミュレーションが終了していないかチェック
+	pthread_mutex_lock(&philo->table->death_lock.mutex);
+	if (!philo->table->simulation_should_end)
 	{
-		pthread_mutex_lock(&philo->table->write_lock.mutex); // ★ 3. 終了していない場合のみ、write_lock をロックする
+		pthread_mutex_lock(&philo->table->write_lock.mutex);
 		current_time = get_time() - philo->table->start_time;
 		printf("%lld %d %s\n", current_time, philo->id, status);
 		pthread_mutex_unlock(&philo->table->write_lock.mutex);
@@ -51,16 +51,16 @@ void cleanup(t_table *table)
 	i = 0;
 	while (i < table->num_philos)
 	{
-        if ((table->forks) && (table->forks[i].is_initialized))
-            pthread_mutex_destroy(&table->forks[i].mutex);
+		if ((table->forks) && (table->forks[i].is_initialized))
+			pthread_mutex_destroy(&table->forks[i].mutex);
 		i++;
 	}
-    if (table->write_lock.is_initialized)
+	if (table->write_lock.is_initialized)
 		pthread_mutex_destroy(&table->write_lock.mutex);
-    if (table->meal_lock.is_initialized)
-        pthread_mutex_destroy(&table->meal_lock.mutex);
-    if (table->death_lock.is_initialized)
+	if (table->meal_lock.is_initialized)
+		pthread_mutex_destroy(&table->meal_lock.mutex);
+	if (table->death_lock.is_initialized)
 		pthread_mutex_destroy(&table->death_lock.mutex);
-    free(table->forks);
-    free(table->philos);
+	free(table->forks);
+	free(table->philos);
 }

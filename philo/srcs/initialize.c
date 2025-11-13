@@ -6,7 +6,7 @@
 /*   By: shunwata <shunwata@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/08 18:00:34 by shunwata          #+#    #+#             */
-/*   Updated: 2025/11/03 22:43:31 by shunwata         ###   ########.fr       */
+/*   Updated: 2025/11/13 18:22:36 by shunwata         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ bool	init_table(t_table *table, char **argv)
 {
     int	i;
 
-    memset(table, 0, sizeof(t_table));
+	memset(table, 0, sizeof(t_table));
 	get_args(table, argv);
 	table->simulation_should_end = false;
 	table->forks = malloc(sizeof(t_mutex_combo) * table->num_philos);
