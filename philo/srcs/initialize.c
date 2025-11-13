@@ -6,7 +6,7 @@
 /*   By: shunwata <shunwata@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/08 18:00:34 by shunwata          #+#    #+#             */
-/*   Updated: 2025/11/13 18:22:36 by shunwata         ###   ########.fr       */
+/*   Updated: 2025/11/13 18:35:06 by shunwata         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ static void	init_philos(t_table *table)
 
 bool	init_table(t_table *table, char **argv)
 {
-    int	i;
+	int	i;
 
 	memset(table, 0, sizeof(t_table));
 	get_args(table, argv);
