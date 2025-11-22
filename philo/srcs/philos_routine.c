@@ -6,7 +6,7 @@
 /*   By: shunwata <shunwata@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/08 18:09:14 by shunwata          #+#    #+#             */
-/*   Updated: 2025/11/22 17:29:45 by shunwata         ###   ########.fr       */
+/*   Updated: 2025/11/22 18:43:27 by shunwata         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,8 @@ void	*philo_routine(void *arg)
 	set_forks(table, philo, &left_fork, &right_fork);
 	if (table->num_philos == 1)
 		return (lonely_philo(table, philo, left_fork));
+	if (philo->id % 2 == 0)
+		usleep(1000);
 	while (!simulation_finished(table))
 	{
 		if (no_need_to_eat(table, philo))
@@ -76,8 +78,7 @@ void	*philo_routine(void *arg)
 		print_status(philo, "is sleeping");
 		precise_sleep(table->time_to_sleep);
 		print_status(philo, "is thinking");
-		if (table->num_philos % 2 != 0 || table->time_to_eat >= table->time_to_sleep)
-				usleep(1000);
+		usleep(500);
 	}
 	return (NULL);
 }
