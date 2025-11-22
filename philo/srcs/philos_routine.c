@@ -6,7 +6,7 @@
 /*   By: shunwata <shunwata@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/08 18:09:14 by shunwata          #+#    #+#             */
-/*   Updated: 2025/11/13 18:27:54 by shunwata         ###   ########.fr       */
+/*   Updated: 2025/11/22 16:32:46 by shunwata         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,8 @@ void	*philo_routine(void *arg)
 	set_forks(table, philo, &left_fork, &right_fork);
 	if (table->num_philos == 1)
 		return (lonely_philo(table, philo, left_fork));
+	if (philo->id % 2 != 0)
+		usleep(100);
 	while (!simulation_finished(table))
 	{
 		if (no_need_to_eat(table, philo))
