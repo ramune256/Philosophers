@@ -6,7 +6,7 @@
 /*   By: shunwata <shunwata@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/08 18:09:14 by shunwata          #+#    #+#             */
-/*   Updated: 2025/11/22 16:50:45 by shunwata         ###   ########.fr       */
+/*   Updated: 2025/11/22 17:29:45 by shunwata         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,8 @@ void	*philo_routine(void *arg)
 		print_status(philo, "is sleeping");
 		precise_sleep(table->time_to_sleep);
 		print_status(philo, "is thinking");
-		usleep(100);
+		if (table->num_philos % 2 != 0 || table->time_to_eat >= table->time_to_sleep)
+				usleep(1000);
 	}
 	return (NULL);
 }

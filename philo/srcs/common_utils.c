@@ -6,7 +6,7 @@
 /*   By: shunwata <shunwata@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/08 17:53:38 by shunwata          #+#    #+#             */
-/*   Updated: 2025/11/13 18:32:34 by shunwata         ###   ########.fr       */
+/*   Updated: 2025/11/22 17:14:18 by shunwata         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,18 @@ long long	get_time(void)
 
 void	precise_sleep(long long target_time)
 {
-	long long	start;
+	long long start;
+	long long current;
 
 	start = get_time();
 	while ((get_time() - start) < target_time)
-		usleep(500);
+	{
+		current = get_time() - start;
+		if (target_time - current > 5)
+			usleep(1000);
+		else
+			usleep(100);
+	}
 }
 
 void	print_status(t_philo *philo, char *status)
