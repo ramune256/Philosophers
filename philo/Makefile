@@ -6,7 +6,7 @@
 #    By: shunwata <shunwata@student.42tokyo.jp>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/09/07 22:30:16 by shunwata          #+#    #+#              #
-#    Updated: 2025/11/13 18:01:50 by shunwata         ###   ########.fr        #
+#    Updated: 2025/11/27 19:13:03 by shunwata         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,9 @@ CFLAGS = -Wall -Wextra -Werror -I $(INC_DIR)
 SRC_DIR = srcs
 INC_DIR = includes
 
-SRC = $(addprefix $(SRC_DIR)/, common_utils.c common_utils2.c initialize.c is_valid_args.c main.c monitor.c philos_routine_utils.c philos_routine.c)
+SRC = $(addprefix $(SRC_DIR)/, common_utils.c common_utils2.c initialize.c \
+							is_valid_args.c main.c monitor.c \
+							philos_routine_utils.c philos_routine.c)
 OBJ = $(SRC:.c=.o)
 
 all: $(NAME)
