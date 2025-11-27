@@ -6,7 +6,7 @@
 /*   By: shunwata <shunwata@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/20 14:21:09 by shunwata          #+#    #+#             */
-/*   Updated: 2025/11/13 18:35:15 by shunwata         ###   ########.fr       */
+/*   Updated: 2025/11/27 19:34:00 by shunwata         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static bool	is_valid_int(const char *str)
 {
-	int		len;
+	size_t	len;
 
 	if (!str || *str == '\0')
 		return (false);
