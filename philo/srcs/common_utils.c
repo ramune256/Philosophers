@@ -6,7 +6,7 @@
 /*   By: shunwata <shunwata@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/08 17:53:38 by shunwata          #+#    #+#             */
-/*   Updated: 2025/11/22 17:14:18 by shunwata         ###   ########.fr       */
+/*   Updated: 2025/11/27 18:51:12 by shunwata         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,8 @@ long long	get_time(void)
 
 void	precise_sleep(long long target_time)
 {
-	long long start;
-	long long current;
+	long long	start;
+	long long	current;
 
 	start = get_time();
 	while ((get_time() - start) < target_time)
