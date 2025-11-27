@@ -6,7 +6,7 @@
 /*   By: shunwata <shunwata@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/07 22:32:36 by shunwata          #+#    #+#             */
-/*   Updated: 2025/11/13 18:21:21 by shunwata         ###   ########.fr       */
+/*   Updated: 2025/11/27 19:05:05 by shunwata         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,7 @@ void		*monitor_philos(t_table *table);
 void		set_forks(t_table *table, t_philo *philo, int *l_fork, int *r_fork);
 bool		get_forks(t_table *table, t_philo *philo, int fork1, int fork2);
 void		return_forks(t_table *table, int fork1, int fork2);
+bool		simulation_finished(t_table *table);
 
 void		*philo_routine(void *arg);
 

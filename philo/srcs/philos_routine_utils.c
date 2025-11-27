@@ -6,7 +6,7 @@
 /*   By: shunwata <shunwata@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/04 15:51:28 by shunwata          #+#    #+#             */
-/*   Updated: 2025/11/13 18:20:47 by shunwata         ###   ########.fr       */
+/*   Updated: 2025/11/27 19:04:26 by shunwata         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,4 +31,14 @@ void	return_forks(t_table *table, int fork1, int fork2)
 {
 	pthread_mutex_unlock(&table->forks[fork1].mutex);
 	pthread_mutex_unlock(&table->forks[fork2].mutex);
+}
+
+bool	simulation_finished(t_table *table)
+{
+	bool	is_finished;
+
+	pthread_mutex_lock(&table->death_lock.mutex);
+	is_finished = table->simulation_should_end;
+	pthread_mutex_unlock(&table->death_lock.mutex);
+	return (is_finished);
 }

@@ -6,7 +6,7 @@
 /*   By: shunwata <shunwata@student.42tokyo.jp>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/09/08 18:09:14 by shunwata          #+#    #+#             */
-/*   Updated: 2025/11/27 18:57:58 by shunwata         ###   ########.fr       */
+/*   Updated: 2025/11/27 19:07:29 by shunwata         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,16 +21,6 @@ static void	*lonely_philo(t_table *table, t_philo *philo, int left_fork)
 	return (NULL);
 }
 
-static void	philo_eats(t_table *table, t_philo *philo)
-{
-	print_status(philo, "is eating");
-	pthread_mutex_lock(&table->meal_lock.mutex);
-	philo->last_meal_time = get_time();
-	philo->eat_count++;
-	pthread_mutex_unlock(&table->meal_lock.mutex);
-	precise_sleep(table->time_to_eat);
-}
-
 static bool	no_need_to_eat(t_table *table, t_philo *philo)
 {
 	if (table->num_meals > 0)
@@ -41,14 +31,20 @@ static bool	no_need_to_eat(t_table *table, t_philo *philo)
 	return (false);
 }
 
-static bool	simulation_finished(t_table *table)
+static void	philo_eats(t_table *table, t_philo *philo)
 {
-	bool	is_finished;
+	print_status(philo, "is eating");
+	pthread_mutex_lock(&table->meal_lock.mutex);
+	philo->last_meal_time = get_time();
+	philo->eat_count++;
+	pthread_mutex_unlock(&table->meal_lock.mutex);
+	precise_sleep(table->time_to_eat);
+}
 
-	pthread_mutex_lock(&table->death_lock.mutex);
-	is_finished = table->simulation_should_end;
-	pthread_mutex_unlock(&table->death_lock.mutex);
-	return (is_finished);
+static void	philo_sleeps(t_table *table, t_philo *philo)
+{
+	print_status(philo, "is sleeping");
+	precise_sleep(table->time_to_sleep);
 }
 
 void	*philo_routine(void *arg)
@@ -74,7 +70,7 @@ void	*philo_routine(void *arg)
 			return (return_forks(table, left_fork, right_fork), NULL);
 		philo_eats(table, philo);
 		return_forks(table, left_fork, right_fork);
-		(print_status(philo, "is sleeping"), precise_sleep(table->time_to_sleep));
+		philo_sleeps(table, philo);
 		(print_status(philo, "is thinking"), usleep(500));
 	}
 	return (NULL);
